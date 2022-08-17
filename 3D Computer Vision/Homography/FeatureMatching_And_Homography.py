@@ -27,10 +27,11 @@ matches = matcher.match(des1, des2, None)  # Creates a list of all matches, just
 matches = sorted(matches, key = lambda x:x.distance)
 
 # https://docs.opencv.org/3.0-beta/modules/features2d/doc/drawing_function_of_keypoints_and_matches.html
-# Draw first 10 matches.
-img3 = cv2.drawMatches(im1,kp1, im2, kp2, matches[:10], None)
+# Draw first 100 matches.
+img3 = cv2.drawMatches(im1,kp1, im2, kp2, matches[:100], None)
 
-cv2.imshow("Matches image", img3)
+cv2.imshow("Matches image", cv2.resize(img3,(1024, 1024)))
+cv2.imwrite("images/output/matches.jpg", img3)
 cv2.waitKey(0)
 
 # Now let us use these key points to register two images. 
@@ -63,6 +64,6 @@ height, width, channels = im2.shape
 im1Reg = cv2.warpPerspective(im1, h, (width, height)) # Applies a perspective transformation to an image.
    
 print("Estimated homography : \n",  h)
-cv2.imshow("Features Matched Image", im1Reg)
+cv2.imshow("Features Matched Image", cv2.resize(im1Reg,(1024, 1024)))
 cv2.imwrite("images/output/FeaturesMatched.jpg", im1Reg)
 cv2.waitKey()
